@@ -11,7 +11,8 @@ manuscript_draft.md
 theory_draft.md
 ARAS_greek.png
 
-# Scripts specific to this paper
+# Paper-specific private modules and scripts
+fingerprint.py
 download_all.py
 download_full_cmip6.py
 run_genome_real.py

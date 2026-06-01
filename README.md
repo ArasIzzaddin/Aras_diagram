@@ -8,62 +8,57 @@ A Python implementation of **Aras' diagram** — a graphical tool for performanc
 
 Aras' diagram evaluates model performance by integrating three components in a single 2D plot:
 
-- **β** = μ_sim / μ_obs — bias ratio (x-axis: β − 1)
-- **α** = σ_sim / σ_obs — variability ratio (y-axis: α − 1)
-- **r** — Pearson correlation (encoded as line segment length)
+| Component | Formula | Meaning |
+|---|---|---|
+| **β** | μ_sim / μ_obs | Bias ratio (x-axis: β − 1) |
+| **α** | σ_sim / σ_obs | Variability ratio (y-axis: α − 1) |
+| **r** | Pearson correlation | Encoded as line segment length |
 
-The diagram decomposes total model error into:
-- **E_αβ** = √[(β−1)² + (α−1)²] — bias + variability error (circle marker)
-- **E** = √[(1−r)² + (β−1)² + (α−1)²] — total error including correlation (triangle marker)
+Each model is shown as two points connected by a line:
+- **Circle** — E_αβ = √[(β−1)² + (α−1)²] — bias + variability error. Filled if r > 0, empty if r < 0.
+- **Triangle** — E = √[(1−r)² + (β−1)² + (α−1)²] — total error including correlation
+- **Line** — length represents the correlation error component
 
-The connecting line between circle and triangle represents the **correlation error**.
+The origin (0, 0) is the perfect score. Concentric circles mark 10%, 25%, and 50% total error.
 
 ## Installation
 
 ```bash
-pip install numpy matplotlib xarray
+pip install numpy matplotlib
 ```
 
 ## Quick start
 
 ```python
+import numpy as np
 from aras_core import compute_aras_components
 from aras_plot import plot_aras_diagram
 import matplotlib.pyplot as plt
 
-# Compute components for one model
-components = compute_aras_components(sim=model_output, obs=observations)
-# Returns: r, beta, alpha, E_ab, L_aras, kge
+obs = np.array([...])   # observations
+sim = np.array([...])   # model output
+
+components = compute_aras_components(sim, obs)
+print(components)
+# {'r': 0.85, 'beta': 1.05, 'alpha': 0.92, 'E_ab': 0.054, 'L_aras': 0.207, 'kge': 0.793}
 
 # Plot multiple models
-genomes = {
-    'Model-A': {'tas': compute_aras_components(sim_A, obs)},
-    'Model-B': {'tas': compute_aras_components(sim_B, obs)},
+models = {
+    'Model A': {'precipitation': compute_aras_components(sim_A, obs)},
+    'Model B': {'precipitation': compute_aras_components(sim_B, obs)},
 }
 
 fig, ax = plt.subplots(figsize=(8, 8))
-plot_aras_diagram(genomes, variable='tas', ax=ax)
+plot_aras_diagram(models, variable='precipitation', ax=ax)
 plt.show()
-```
-
-## Multi-variable fingerprint
-
-```python
-from aras_core import compute_genome, genome_matrix
-
-# Build fingerprint for one model across multiple variables
-genome = compute_genome(model_data, obs_data, variables=['tas', 'pr', 'psl'])
-
-# Pairwise distance matrix between models
-names, D = genome_matrix(genomes)
 ```
 
 ## Files
 
 | File | Description |
 |---|---|
-| `aras_core.py` | Core computations: β, α, r, E_αβ, L_Aras, fingerprint distance |
-| `aras_plot.py` | Aras diagram (paper style), heatmaps, distance matrix |
+| `aras_core.py` | Computes β, α, r, E_αβ, L_Aras (= 1 − KGE) |
+| `aras_plot.py` | Produces the Aras diagram in the style of the original paper |
 
 ## Citation
 
