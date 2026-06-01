@@ -6,7 +6,7 @@ of complex models. Stochastic Environmental Research and Risk Assessment,
 
 Variability ratio: alpha = sigma_sim / sigma_obs  (Gupta et al. 2009)
 Bias ratio:        beta  = mu_sim   / mu_obs
-Total error:       L_Aras = sqrt[(1-r)^2 + (beta-1)^2 + (alpha-1)^2]
+Total error:       total_error = sqrt[(1-r)^2 + (beta-1)^2 + (alpha-1)^2]
 """
 
 import numpy as np
@@ -28,8 +28,8 @@ def compute_aras_components(sim: np.ndarray, obs: np.ndarray) -> dict:
         beta   - bias ratio  (mu_sim / mu_obs)
         alpha  - variability ratio  (sigma_sim / sigma_obs)
         E_ab   - bias-variability error  sqrt[(beta-1)^2 + (alpha-1)^2]
-        L_aras - total error  sqrt[(1-r)^2 + (beta-1)^2 + (alpha-1)^2]
-        kge    - Kling-Gupta efficiency  (1 - L_aras)
+        total_error - total error  sqrt[(1-r)^2 + (beta-1)^2 + (alpha-1)^2]
+        kge    - Kling-Gupta efficiency  (1 - total_error)
     """
     sim = np.asarray(sim).flatten()
     obs = np.asarray(obs).flatten()
@@ -39,7 +39,7 @@ def compute_aras_components(sim: np.ndarray, obs: np.ndarray) -> dict:
 
     if len(sim) < 3:
         return dict(r=np.nan, beta=np.nan, alpha=np.nan,
-                    E_ab=np.nan, L_aras=np.nan, kge=np.nan)
+                    E_ab=np.nan, total_error=np.nan, kge=np.nan)
 
     mu_sim    = sim.mean()
     mu_obs    = obs.mean()
@@ -51,7 +51,7 @@ def compute_aras_components(sim: np.ndarray, obs: np.ndarray) -> dict:
     alpha = sigma_sim / sigma_obs if sigma_obs != 0 else np.nan
 
     E_ab   = np.sqrt((beta  - 1)**2 + (alpha - 1)**2)
-    L_aras = np.sqrt((1 - r)**2    + (beta  - 1)**2 + (alpha - 1)**2)
-    kge    = 1 - L_aras
+    total_error = np.sqrt((1 - r)**2    + (beta  - 1)**2 + (alpha - 1)**2)
+    kge    = 1 - total_error
 
-    return dict(r=r, beta=beta, alpha=alpha, E_ab=E_ab, L_aras=L_aras, kge=kge)
+    return dict(r=r, beta=beta, alpha=alpha, E_ab=E_ab, total_error=total_error, kge=kge)

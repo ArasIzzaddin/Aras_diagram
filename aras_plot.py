@@ -28,7 +28,7 @@ def plot_aras_diagram(
     Each model shown as two points:
       - circle  : E_ab = sqrt((beta-1)^2 + (alpha-1)^2)  [bias-variability error]
                   filled if r > 0, empty if r < 0
-      - triangle: E = L_Aras  [total error including correlation]
+      - triangle: E = total_error  [total error including correlation]
     Line connecting them represents the correlation error.
 
     Parameters
@@ -60,7 +60,7 @@ def plot_aras_diagram(
         if any(np.isnan(g.get(k, np.nan)) for k in ['beta', 'alpha', 'r']):
             continue
         bx, ay = g['beta'] - 1, g['alpha'] - 1
-        E_ab, L = g['E_ab'], g['L_aras']
+        E_ab, L = g['E_ab'], g['total_error']
         scale = L / E_ab if E_ab > 1e-6 else 1
         all_coords += [abs(bx), abs(ay), abs(bx * scale), abs(ay * scale)]
 
@@ -120,7 +120,7 @@ def plot_aras_diagram(
         bx    = g['beta']  - 1
         ay    = g['alpha'] - 1
         E_ab  = g['E_ab']
-        L     = g['L_aras']
+        L     = g['total_error']
         r_val = g['r']
 
         color = (model_colors or {}).get(model_name, colors[idx % len(colors)])
