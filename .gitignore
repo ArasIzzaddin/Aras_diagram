@@ -1,0 +1,26 @@
+# Data and figures — not pushed to GitHub
+cmip6_data/
+figures_real/
+figures_ar6/
+*.png
+*.pdf
+*.nc
+
+# Paper drafts — private
+manuscript_draft.md
+theory_draft.md
+ARAS_greek.png
+
+# Scripts specific to this paper
+download_all.py
+download_full_cmip6.py
+run_genome_real.py
+run_genome_ar6.py
+cmip6_loader.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
