@@ -4,6 +4,10 @@ A Python implementation of **Aras' diagram** — a graphical tool for performanc
 
 > Izzaddin, A., Langousis, A., Totaro, V., Yaseen, M., & Iacobellis, V. (2024). *A new diagram for performance evaluation of complex models.* Stochastic Environmental Research and Risk Assessment, 38, 2261–2281. https://doi.org/10.1007/s00477-024-02678-3
 
+## 🎯 Live interactive tool — no installation needed
+
+**[Aras' Diagram Studio](https://arasizzaddin.github.io/Aras_diagram/)** runs entirely in the browser: paste or upload your observation and model series (CSV) and get the diagram, the full KGE decomposition (r, α, β, E_αβ, E, KGE), a sortable model ranking, and publication-ready SVG/PNG export. It is numerically verified against `aras_core.py` (agreement to machine precision) and lives in [`docs/index.html`](docs/index.html).
+
 ## What it does
 
 Aras' diagram evaluates model performance by integrating three components in a single 2D plot:
