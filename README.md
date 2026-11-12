@@ -64,6 +64,14 @@ plt.show()
 | `aras_core.py` | Computes β, α, r, E_αβ, L_Aras (= 1 − KGE) |
 | `aras_plot.py` | Produces the Aras diagram in the style of the original paper |
 
+## Applications
+
+The diagram and its decomposition have been applied in:
+
+> Izzaddin, A., Langousis, A., Yaseen, M., Gioia, A., Pagano, A., & Iacobellis, V. (2026). *Are regional rankings of CMIP6 climate models reproducible? Only the mean state survives a change of reference period.* Stochastic Environmental Research and Risk Assessment, 40, 271. https://doi.org/10.1007/s00477-026-03408-7
+
+This study uses the decomposition shown by the diagram (bias, variability, and correlation) to test how reproducible regional rankings of 39 CMIP6 models are when the reference period changes.
+
 ## Citation
 
 ```bibtex
@@ -76,6 +84,17 @@ plt.show()
   pages   = {2261--2281},
   year    = {2024},
   doi     = {10.1007/s00477-024-02678-3}
+}
+
+@article{izzaddin2026,
+  title   = {Are regional rankings of CMIP6 climate models reproducible? Only the mean state survives a change of reference period},
+  author  = {Izzaddin, Aras and Langousis, Andreas and Yaseen, Marwah
+             and Gioia, Andrea and Pagano, Alessandro and Iacobellis, Vito},
+  journal = {Stochastic Environmental Research and Risk Assessment},
+  volume  = {40},
+  pages   = {271},
+  year    = {2026},
+  doi     = {10.1007/s00477-026-03408-7}
 }
 ```
 
